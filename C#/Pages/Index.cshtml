@@ -1,0 +1,43 @@
+﻿@page
+@model Desafio2AI102.Pages.IndexModel
+@{
+    ViewData["Title"] = "Upload e Análise de Arquivo";
+}
+
+<h2>Upload e Análise de Arquivo</h2>
+
+<form method="post" enctype="multipart/form-data">
+    <input type="file" name="uploadedFile" accept=".png,.jpg,.jpeg" />
+    <button type="submit">Enviar</button>
+</form>
+
+@if (Model.Message != null)
+{
+    <p style="color: red;">@Model.Message</p>
+}
+
+@if (Model.BlobUrl != null)
+{
+    <h3>Arquivo Enviado</h3>
+    <img src="@Model.BlobUrl" alt="Arquivo Enviado" style="max-width: 100%; height: auto;" />
+    <p>URL do Blob: <a href="@Model.BlobUrl">@Model.BlobUrl</a></p>
+}
+
+@if (Model.creditCardInfo != null)
+{
+    var creditCardInfo = Model.creditCardInfo;
+
+    if (!string.IsNullOrEmpty(creditCardInfo.CardName))
+    {
+        <h3 style="color: green;">Cartão Válido</h3>
+        <p>Nome do Titular: @creditCardInfo.CardName</p>
+        <p>Número do Cartão: @creditCardInfo.CardNumber</p>
+        <p>Data de Expiração: @creditCardInfo.ExpireDate</p>
+        <p>Banco Emissor: @creditCardInfo.BankName</p>
+    }
+    else
+    {
+        <h3 style="color: red;">Cartão Inválido</h3>
+        <p>Informações incompletas ou inválidas.</p>
+    }
+}
